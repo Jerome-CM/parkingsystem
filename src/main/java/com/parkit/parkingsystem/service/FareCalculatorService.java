@@ -34,7 +34,7 @@ public class FareCalculatorService {
         	double NumberOfHours = minuteInParking / 60;
         	int NumberOfCompleteHours = (int)Math.ceil(NumberOfHours);
 	
-        	duration = NumberOfCompleteHours;
+        	duration = NumberOfCompleteHours; 
         	
         }
         
