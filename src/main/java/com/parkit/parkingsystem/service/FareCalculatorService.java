@@ -24,18 +24,26 @@ public class FareCalculatorService {
 
         double duration = 0.00;
         
-        // If the hour isn't complete, the user pay only 3/4 of an hour
-        if(minuteInParking < 60){
-        		
-    	   duration = 0.75;
-      
+        // If the time of park is under 30 minutes, it's free
+        if(minuteInParking < 30){
+        	
+        	duration = 0.00;
+        	
         } else {
         	
-        	double NumberOfHours = minuteInParking / 60;
-        	int NumberOfCompleteHours = (int)Math.ceil(NumberOfHours);
-	
-        	duration = NumberOfCompleteHours; 
-        	
+	        // If the hour isn't complete, the user pay only 3/4 of an hour
+	        if(minuteInParking >= 30 && minuteInParking < 60){
+	        		
+	    	   duration = 0.75;
+	      
+	        } else {
+	        	
+	        	double NumberOfHours = minuteInParking / 60;
+	        	int NumberOfCompleteHours = (int)Math.ceil(NumberOfHours);
+		
+	        	duration = NumberOfCompleteHours;
+	        	
+	        }
         }
         
         switch (ticket.getParkingSpot().getParkingType()){
