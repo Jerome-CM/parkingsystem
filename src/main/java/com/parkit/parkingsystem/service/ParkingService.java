@@ -34,7 +34,6 @@ public class ParkingService {
                 String vehicleRegNumber = getVehichleRegNumber();
                 parkingSpot.setAvailable(false);
                 parkingSpotDAO.updateParking(parkingSpot);//allot this parking space and mark it's availability as false
-                System.out.println(sayWelcomeBack(vehicleRegNumber));
                 Date inTime = new Date();
                 Ticket ticket = new Ticket();
                 //ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
@@ -45,7 +44,7 @@ public class ParkingService {
                 ticket.setInTime(inTime);
                 ticket.setOutTime(null);
                 ticketDAO.saveTicket(ticket);
-                
+                System.out.println(sayWelcomeBack(ticket));
                 System.out.println("Generated Ticket and saved in DB");
                 System.out.println("Please park your vehicle in spot number:"+parkingSpot.getId());
                 System.out.println("Recorded in-time for vehicle number:"+vehicleRegNumber+" is:"+inTime);
@@ -63,14 +62,14 @@ public class ParkingService {
     /**
      *  This method return a message if the VehichleRegNumber existing in BDD and OutTime is complete
      * 
-     * @param VehichleRegNumber
+     * @param Object Ticket
      * @return Display message for 5% reduction
      */
-    public String sayWelcomeBack(String VehichleRegNumber) {
+    public String sayWelcomeBack(Ticket ticket) {
     	Ticket isExist = null;
     	
-    	isExist = ticketDAO.getTicket(VehichleRegNumber);
-    	if(isExist != null ) { //  && isExist.getOutTime() != null
+    	isExist = ticketDAO.getTicket(ticket.getVehicleRegNumber());
+    	if(isExist != null) { //  && isExist.getOutTime() != null
     		return "Welcome back! As a recurring user of our parking lot, you'll benefit from a 5% discount.";
     	} else {
     		return "";
@@ -121,6 +120,9 @@ public class ParkingService {
             Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
             Date outTime = new Date();
             ticket.setOutTime(outTime);
+            if(ticketDAO.ifExistingTicket(vehicleRegNumber)){
+            	ticket.setReccurentUser(true);
+            }
             fareCalculatorService.calculateFare(ticket);
             if(ticketDAO.updateTicket(ticket)) {
                 ParkingSpot parkingSpot = ticket.getParkingSpot();

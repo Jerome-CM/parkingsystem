@@ -86,4 +86,31 @@ public class TicketDAO {
         }
         return false;
     }
+    
+    /**
+     * Return if yes or no, the user is a recurrent customer
+     * @param vehicleRegNumber
+     * @return 
+     */
+    public boolean ifExistingTicket(String vehicleRegNumber) {
+    	Connection con = null;
+        try {
+            con = dataBaseConfig.getConnection();
+            PreparedStatement ps = con.prepareStatement(DBConstants.RECCURENT_USER);
+            ps.setString(1,vehicleRegNumber);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+            	if(rs.getInt(1) > 1) {
+            		return true;
+	            } else {
+	            	return false;
+	            }
+            }
+        }catch (Exception ex){
+            logger.error("Error saving ticket info",ex);
+        }finally {
+            dataBaseConfig.closeConnection(con);
+        }
+        return false;
+    }
 }
