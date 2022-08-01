@@ -38,6 +38,7 @@ public class ParkingServiceTest {
     private static ParkingSpotDAO parkingSpotDAO;
     @Mock
     private static TicketDAO ticketDAO;
+    
 
     @BeforeEach
     private void setUpPerTest() {
@@ -63,16 +64,16 @@ public class ParkingServiceTest {
     
 
     @Test
-    public void showWelcomeMessage() {
+    public void showWelcomeMessageTest() {
     	
     	// Arrange
     	String expectedMessage = "Welcome back! As a recurring user of our parking lot, you'll benefit from a 5% discount.";
     	
     	// Act
-    	String returnMessage = parkingService.sayWelcomeBack(anyString());
-
+    	String returnMessage = parkingService.sayWelcomeBack(ticketDAO.getTicket(anyString()));
+    	
     	// Assert
-    	verify(ticketDAO, times(1)).getTicket(anyString());
+    	verify(ticketDAO, times(2)).getTicket(anyString());
     	assertEquals(expectedMessage, returnMessage);
 
     }
