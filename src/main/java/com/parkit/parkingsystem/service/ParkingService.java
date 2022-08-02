@@ -43,8 +43,10 @@ public class ParkingService {
                 ticket.setPrice(0);
                 ticket.setInTime(inTime);
                 ticket.setOutTime(null);
+                boolean ticketExist = ticketDAO.getTicket(vehicleRegNumber) != null;
+                ticket.setReccurentUser(ticketExist);
                 ticketDAO.saveTicket(ticket);
-                System.out.println(sayWelcomeBack(ticket));
+                System.out.println(ticketExist ? "Welcome back! As a recurring user of our parking lot, you'll benefit from a 5% discount." : "");
                 System.out.println("Generated Ticket and saved in DB");
                 System.out.println("Please park your vehicle in spot number:"+parkingSpot.getId());
                 System.out.println("Recorded in-time for vehicle number:"+vehicleRegNumber+" is:"+inTime);
@@ -59,22 +61,6 @@ public class ParkingService {
         return inputReaderUtil.readVehicleRegistrationNumber();
     }
     
-    /**
-     *  This method return a message if the VehichleRegNumber existing in BDD and OutTime is complete
-     * 
-     * @param Object Ticket
-     * @return Display message for 5% reduction
-     */
-    public String sayWelcomeBack(Ticket ticket) {
-    	Ticket isExist = null;
-    	
-    	isExist = ticketDAO.getTicket(ticket.getVehicleRegNumber());
-    	if(isExist != null) { //  && isExist.getOutTime() != null
-    		return "Welcome back! As a recurring user of our parking lot, you'll benefit from a 5% discount.";
-    	} else {
-    		return "";
-    	}
-    }
 
     public ParkingSpot getNextParkingNumberIfAvailable(){
         int parkingNumber=0;
