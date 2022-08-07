@@ -26,7 +26,7 @@ public class FareCalculatorService {
         long millisecOut = ticket.getOutTime().getTime();
         
         // Get numbers of minutes in the parking
-        int minuteInParking = (int)( millisecOut - millisecIn) / 60000;
+        double minuteInParking = ( millisecOut - millisecIn) / 60000;
         
         // If the time of park is under 30 minutes, it's free
         if(minuteInParking < 30){
@@ -34,20 +34,11 @@ public class FareCalculatorService {
         	duration = 0.00;
         	
         } else {
+	        	
+        	double NumberOfHours = minuteInParking / 60;
+	
+        	duration = NumberOfHours;
         	
-	        // If the hour isn't complete, the user pay only 3/4 of an hour
-	        if(minuteInParking >= 30 && minuteInParking < 60){
-	        		
-	    	   duration = 0.75;
-	      
-	        } else {
-	        	
-	        	double NumberOfHours = minuteInParking / 60;
-	        	int NumberOfCompleteHours = (int)Math.ceil(NumberOfHours);
-		
-	        	duration = NumberOfCompleteHours;
-	        	
-	        }
         }
         
         // Calculate price
