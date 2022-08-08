@@ -8,12 +8,16 @@ import java.sql.*;
 public class DataBaseConfig {
 
     private static final Logger logger = LogManager.getLogger("DataBaseConfig");
+    
+    EncryptedDatabaseId crypted = new EncryptedDatabaseId();
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         logger.info("Create DB connection");
         Class.forName("com.mysql.cj.jdbc.Driver");
+        String uname = crypted.getEncryptedUser();
+        String password = crypted.getEncryptedPass();
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/test","root","Java-Mysql3306");
+                "jdbc:mysql://localhost:3306/test",uname,password);
     }
 
     public void closeConnection(Connection con){
