@@ -61,7 +61,6 @@ public class ParkingDataBaseIT {
         parkingService.processIncomingVehicle();
         
         
-        
         // Act
         Ticket testTicket = ticketDAO.getTicket("ABCDEF");
         parkingSpotDAO.updateParking(testTicket.getParkingSpot());
