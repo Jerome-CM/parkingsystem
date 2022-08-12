@@ -1,9 +1,7 @@
 package com.parkit.parkingsystem;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,8 +26,6 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
 @ExtendWith(MockitoExtension.class)
 public class ParkingServiceTest {
 	
-	
-
     private static ParkingService parkingService;
 
     @Mock
@@ -43,7 +39,7 @@ public class ParkingServiceTest {
     @BeforeEach
     private void setUpPerTest() {
         try {
-            lenient().when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF"); //
+            when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF"); 
 
             ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
             Ticket ticket = new Ticket();
@@ -51,9 +47,8 @@ public class ParkingServiceTest {
             ticket.setParkingSpot(parkingSpot);
             ticket.setVehicleRegNumber("ABCDEF");
             when(ticketDAO.getTicket(anyString())).thenReturn(ticket);
-            lenient().when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(true); //
-
-            lenient().when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true); //
+            when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(true);
+            when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true); 
 
             parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
         } catch (Exception e) {
@@ -61,22 +56,7 @@ public class ParkingServiceTest {
             throw new RuntimeException("Failed to set up test mock objects");
         }
     }
-    
-
-//    @Test
-//    public void showWelcomeMessageTest() {
-//    	
-//    	// Arrange
-//    	String expectedMessage = "Welcome back! As a recurring user of our parking lot, you'll benefit from a 5% discount.";
-//    	
-//    	// Act
-//    	String returnMessage = parkingService.sayWelcomeBack(ticketDAO.getTicket(anyString()));
-//    	
-//    	// Assert
-//    	verify(ticketDAO, times(2)).getTicket(anyString());
-//    	assertEquals(expectedMessage, returnMessage);
-//
-//    }
+ 
 
 
 	@Test

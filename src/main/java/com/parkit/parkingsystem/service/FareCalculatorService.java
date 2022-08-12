@@ -6,7 +6,6 @@ import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
 	
-	private TicketDAO ticketDAO;
 	private double duration;
 	private double price;
 
@@ -18,7 +17,7 @@ public class FareCalculatorService {
     	
     	
         if( (ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime())) ){
-            throw new IllegalArgumentException("Out time provided is incorrect:"+ticket.getOutTime().toString());
+            throw new IllegalArgumentException("Out time provided is incorrect:"); // +ticket.getOutTime().toString()
         }
         
         // Date In and Out on Timestamp format
