@@ -1,7 +1,6 @@
 package com.parkit.parkingsystem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,22 +26,12 @@ public class InputReaderUtilTest {
 	public void inputReaderTest() throws Exception {
 		try {
     		String test = inputReaderUtil.readVehicleRegistrationNumber();
-    		//assertEquals(null, test);
     		
-    	} catch(IllegalArgumentException ex) {
-    		assertEquals("Invalid inpt provided", ex.getMessage());
-    	}
-	}
-	
-	@Test
-    public void inputReaderExceptionTest() throws Exception {
-    	try {
-    		String test = inputReaderUtil.readVehicleRegistrationNumber();
-
     	} catch(IllegalArgumentException ex) {
     		assertEquals("Invalid input provided", ex.getMessage());
     	}
-        
-    }
-
+	}
+	
+	
+	
 }
