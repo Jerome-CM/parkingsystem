@@ -35,7 +35,7 @@ public class DataBaseConfig {
         input.close();
         
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/test",user, password);
+                "jdbc:mysql://localhost:3306/prod",user, password);
     }
 
     public void closeConnection(Connection con){
