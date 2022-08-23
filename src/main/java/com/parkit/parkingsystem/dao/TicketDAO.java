@@ -117,7 +117,7 @@ public class TicketDAO {
 	            } 
             }
         }catch (Exception ex){
-            logger.error("Error saving ticket info",ex);
+            logger.error("Error on the existence of the vehicle",ex);
         }finally {
         	dataBaseConfig.closeResultSet(rs);
             dataBaseConfig.closePreparedStatement(ps);

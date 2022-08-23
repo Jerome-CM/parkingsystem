@@ -2,7 +2,6 @@ package com.parkit.parkingsystem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 
 import java.util.Date;
 
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.parkit.parkingsystem.constants.Fare;
@@ -183,7 +181,7 @@ public class FareCalculatorServiceTest {
     
     
     @Test
-    public void calculateFareCarWithADayParkingTime(){
+    public void calculateFareCarWithOneDayParkingTime(){
 		Date inTime = new Date();
         inTime.setTime( System.currentTimeMillis() - (  24 * 60 * 60 * 1000) );//24 hours parking time should give 24 * parking fare per hour
         Date outTime = new Date();
@@ -240,20 +238,5 @@ public class FareCalculatorServiceTest {
         assertThrows(IllegalArgumentException.class, ()-> fareCalculatorService.calculateFare(ticket));
     }
     
- 
-    @Test
-    public void exceptionWithUnknowType() {
-    	
-    	Date inTime = new Date();
-        inTime.setTime( System.currentTimeMillis() - (  2 * 60 * 60 * 1000) ); //2 hours parking time
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BOAT,false);
-        ticket.setInTime(inTime);
-        ticket.setOutTime(outTime);
-        ticket.setParkingSpot(parkingSpot);
-
-        assertThrows(IllegalArgumentException.class, ()-> fareCalculatorService.calculateFare(ticket));
-        
-    }
     
 }
