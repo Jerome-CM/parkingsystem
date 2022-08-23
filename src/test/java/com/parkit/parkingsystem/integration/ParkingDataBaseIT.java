@@ -8,7 +8,6 @@ import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,8 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,11 +47,6 @@ public class ParkingDataBaseIT {
         dataBasePrepareService.clearDataBaseEntries();
     }
 
-    @AfterAll
-    private static void tearDown(){
-
-    }
-
     @Test
     public Ticket testParkingACar(){
     	
@@ -64,15 +56,15 @@ public class ParkingDataBaseIT {
         
         
         // Act
-        Ticket testTicket = ticketDAO.getTicket("ABCDEF");
-        parkingSpotDAO.updateParking(testTicket.getParkingSpot());
+        Ticket ticket = ticketDAO.getTicket("ABCDEF");
+        parkingSpotDAO.updateParking(ticket.getParkingSpot());
         
         // Assert
-        assertEquals("ABCDEF", testTicket.getVehicleRegNumber());
-        assertEquals(null, testTicket.getOutTime());
+        assertEquals("ABCDEF", ticket.getVehicleRegNumber());
+        assertEquals(null, ticket.getOutTime());
         assertNotEquals(1,parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
         
-        return testTicket;
+         return ticket;
     }
 
     @Test

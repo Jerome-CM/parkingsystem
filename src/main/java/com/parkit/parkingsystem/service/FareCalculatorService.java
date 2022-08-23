@@ -1,7 +1,6 @@
 package com.parkit.parkingsystem.service;
 
 import com.parkit.parkingsystem.constants.Fare;
-import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
@@ -24,8 +23,9 @@ public class FareCalculatorService {
         long millisecIn = ticket.getInTime().getTime();
         long millisecOut = ticket.getOutTime().getTime();
         
+        float constanteMinute = 60000;
         // Get numbers of minutes in the parking
-        double minuteInParking = ( millisecOut - millisecIn) / 60000;
+        float minuteInParking = ( millisecOut - millisecIn) / constanteMinute;
         
         // If the time of park is under 30 minutes, it's free
         if(minuteInParking < 30){
@@ -34,7 +34,7 @@ public class FareCalculatorService {
         	
         } else {
 	        	
-        	double NumberOfHours = minuteInParking / 60;
+        	float NumberOfHours = minuteInParking / 60;
 	
         	duration = NumberOfHours;
         	
