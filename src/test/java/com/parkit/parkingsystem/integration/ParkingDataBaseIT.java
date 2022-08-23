@@ -48,10 +48,11 @@ public class ParkingDataBaseIT {
     }
 
     @Test
-    public Ticket testParkingACar(){
+    public void testParkingACar(){
     	
     	// Arrange
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        // Init vehicle in BDD
         parkingService.processIncomingVehicle();
         
         
@@ -64,7 +65,6 @@ public class ParkingDataBaseIT {
         assertEquals(null, ticket.getOutTime());
         assertNotEquals(1,parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
         
-         return ticket;
     }
 
     @Test
