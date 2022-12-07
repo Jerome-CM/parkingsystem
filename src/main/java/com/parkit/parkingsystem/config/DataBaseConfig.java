@@ -28,14 +28,17 @@ public class DataBaseConfig {
         Path pathProperties = FileSystems.getDefault().getPath(".", "bdd.properties");
     	BufferedReader input = Files.newBufferedReader(pathProperties, StandardCharsets.UTF_8);
         Properties pros = new Properties();
-        pros.load(input);      
+        pros.load(input);  
+        String url = pros.getProperty("url");
+        String port = pros.getProperty("port");
+        String dbName = pros.getProperty("dbname");
         String user = pros.getProperty("user");
         String password = pros.getProperty("password");
         Class.forName("com.mysql.cj.jdbc.Driver");
         input.close();
         
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/prod",user, password);
+                "jdbc:mysql:// "+url+":"+port+"/"+dbName,user, password);
     }
 
     public void closeConnection(Connection con){
